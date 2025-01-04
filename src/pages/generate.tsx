@@ -2,6 +2,7 @@ import { sign } from "crypto";
 import { type NextPage } from "next";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
+import Image from "next/image";
 import { useState } from "react";
 import { Button } from "~/Component/Button";
 import { FormGroup } from "~/Component/FormGroup";
@@ -12,10 +13,12 @@ const GeneratePage: NextPage = () => {
     const [form , setForm] = useState({
         prompt: "",
     });
+    const [imageURL, setImageUrl] = useState('')
 
     const generateIcon = api.generate.generateIcon.useMutation({
         onSuccess(data) {
-            console.log("mutation finished", data);
+            if(!data.imageURL) return;
+            setImageUrl(data.imageURL);
         },
     });
 
@@ -25,6 +28,7 @@ const GeneratePage: NextPage = () => {
         generateIcon.mutate({
             prompt: form.prompt,
         });
+        setForm({ prompt: ""});
     }
 
   function updateForm(key: string) {
@@ -57,7 +61,7 @@ const GeneratePage: NextPage = () => {
           Login
         </Button>
       )}
-      
+
       {isLoggedIn && (
         <Button
          onClick={() => {
@@ -67,7 +71,7 @@ const GeneratePage: NextPage = () => {
           Logout
         </Button>
       )}
-
+      
         <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
             <FormGroup>
              <label>Prompt</label>
@@ -77,6 +81,13 @@ const GeneratePage: NextPage = () => {
               Submit
             </button>
         </form>
+        
+        <img 
+          src={`data:image/png;base64,${imageURL}`} 
+          alt="an image of your generated prompt"
+          width="100"
+          height="100"
+        />
       </main>
     </>
   );
