@@ -11,7 +11,10 @@ const config = {
   reactStrictMode: true,
 
   images: {
-    domains:["oaidalleapiprodscus.blob.core.windows.net"],
+    domains:[
+      "oaidalleapiprodscus.blob.core.windows.net",
+      "my-aws-icon-bucket.s3.us-east-2.amazonaws.com"
+    ],
   },
   /**
    * If you have the "experimental: { appDir: true }" setting enabled, then you

@@ -82,8 +82,8 @@ const GeneratePage: NextPage = () => {
             </button>
         </form>
         
-        <img 
-          src={`data:image/png;base64,${imageURL}`} 
+        <Image 
+          src={imageURL} 
           alt="an image of your generated prompt"
           width="100"
           height="100"
